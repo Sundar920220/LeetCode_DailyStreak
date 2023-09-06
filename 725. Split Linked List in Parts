@@ -1,0 +1,44 @@
+https://leetcode.com/problems/split-linked-list-in-parts/description/?envType=daily-question&envId=2023-09-06
+
+class Solution {
+    public ListNode[] splitListToParts(ListNode head, int k) {
+        // Initialize a temporary pointer to the head of the list and calculate its length.
+        ListNode temp = head;
+        int len = 0;
+        while (temp != null) {
+            temp = temp.next;
+            len++;
+        }
+        
+        // Calculate the number of nodes each part should have and the remainder.
+        int numNodes = len / k;
+        int val = len % k;
+        
+        // Create an array to store the resulting list parts.
+        ListNode[] res = new ListNode[k];
+        temp = head;
+        
+        // Iterate through each part.
+        for (int i = 0; i < k; ++i) {
+            ListNode h = temp; // Initialize the head of the current part.
+            
+            // Move the temp pointer to the end of the current part.
+            for (int j = 0; j < numNodes + (i < val ? 1 : 0) - 1; ++j) {
+                if (temp != null) temp = temp.next;
+            }
+            
+            // If there are more nodes left, detach the current part.
+            if (temp != null) {
+                ListNode prev = temp;
+                temp = temp.next;
+                prev.next = null;
+            }
+            
+            // Store the head of the current part in the result array.
+            res[i] = h;
+        }
+        
+        // Return the array of list parts.
+        return res;
+    }
+}
