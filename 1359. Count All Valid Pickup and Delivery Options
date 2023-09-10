@@ -1,0 +1,22 @@
+public int countOrders(int n) {
+    // Initialize result and modulus
+    long res = 1, mod = 1000000007;
+    
+    // Loop from 1 to n
+    for (int i = 1; i <= n; i++) {
+        // Multiply result by i
+        res *= i;
+        
+        // Take the result modulo mod to prevent overflow
+        res %= mod;
+        
+        // Multiply result by (2 * i - 1)
+        res *= (2 * i - 1);
+        
+        // Take the result modulo mod again
+        res %= mod;
+    }
+    
+    // Return the final result as an integer
+    return (int) (res % mod);
+}
