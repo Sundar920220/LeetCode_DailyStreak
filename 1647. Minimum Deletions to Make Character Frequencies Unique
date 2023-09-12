@@ -1,0 +1,41 @@
+class Solution {
+    public int minDeletions(String s) {
+        int freq[] = new int[26]; // An array to store the frequency of each character
+        
+        // Calculate the frequency of each character in the string
+        for (int i = 0; i < s.length(); i++) {
+            freq[s.charAt(i) - 'a']++;
+        }
+        
+        Arrays.sort(freq); // Sort the frequencies in ascending order
+        
+        Set<Integer> occupiedFrequencies = new HashSet<>(); // A set to keep track of occupied frequencies
+        int requiredDeletions = 0; // Count of required deletions
+        
+        // Iterate through the sorted frequencies
+        for (int i = 0; i < 26; i++) {
+            int currFreq = freq[i]; // Current frequency
+            
+            // While there are characters with the same frequency
+            while (currFreq > 0) {
+                if (occupiedFrequencies.contains(currFreq)) {
+                    // If this frequency is already occupied by another character,
+                    // decrement the frequency and increment the deletions count.
+                    currFreq--;
+                    requiredDeletions++;
+                }
+                else {
+                    // If the frequency is not occupied, break the loop.
+                    break;
+                }
+            }
+            
+            // If there are still characters with this frequency, mark it as occupied.
+            if (currFreq != 0) {
+               occupiedFrequencies.add(currFreq); 
+            }
+        }
+        
+        return requiredDeletions; // Return the total number of required deletions
+    }
+}
